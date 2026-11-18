@@ -10,7 +10,7 @@
 <style>
 :root{--bg:#111827;--panel:#1d2939;--panel2:#26364a;--gold:#e8b86d;--cream:#fff5e5;--muted:#aebdce;--red:#e34b55;--blue:#4c91ed}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26364a,#101722 60%);color:var(--cream);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;min-height:100vh}
-.wrap{max-width:900px;margin:auto;padding:18px 14px 28px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.brand{display:flex;align-items:center;gap:12px}.mark{width:48px;height:48px;border-radius:15px;background:linear-gradient(145deg,#f0c77e,#b77a36);display:grid;place-items:center;color:#302013;font-size:25px;box-shadow:0 6px 20px #0005}h1{font-size:clamp(23px,4vw,32px);margin:0;letter-spacing:.2px}.sub{font-size:13px;color:var(--muted);margin-top:3px}.panel{background:linear-gradient(145deg,#233247,#1a2636);border:1px solid #ffffff12;border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 10px 28px #0003}.controls{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.controls button,.controls select{border:1px solid #ffffff18;border-radius:11px;padding:11px 14px;font-size:15px;font-weight:650;background:#34475e;color:#fff;cursor:pointer}.controls button.primary{background:linear-gradient(135deg,#dba85d,#b77a36);color:#24170d;border:0}.controls button:hover{filter:brightness(1.1)}.controls select{background:#172334}.status{margin-top:12px;text-align:center;font-size:18px;font-weight:750;padding:11px;border-radius:12px;background:#101a28;color:#f5d59d;min-height:46px}.score{display:flex;justify-content:space-between;gap:10px;margin:0 0 12px}.score .side{flex:1;background:#172334;border:1px solid #ffffff12;border-radius:13px;padding:10px 13px;display:flex;justify-content:space-between;align-items:center}.side strong{font-size:15px}.side span{font-size:13px;color:var(--muted)}.red{color:#ff747b}.blue{color:#77b4ff}.board-shell{padding:10px;background:linear-gradient(145deg,#e9c48a,#bd8748);border-radius:22px;box-shadow:0 18px 42px #0007;border:1px solid #ffe4b466}canvas{display:block;width:min(94vw,720px);height:min(94vw,720px);max-width:720px;margin:auto;background:#c89552;border-radius:14px;touch-action:none}.help{color:#c4d0df;font-size:13px;line-height:1.55}.footer{color:#8092a8;font-size:11px;text-align:center;margin-top:14px}.lang{margin-left:auto}.lang button{min-width:62px}.lang button.active{background:#e6b76e;color:#2b1b0e}
+.wrap{max-width:900px;margin:auto;padding:18px 14px 28px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.brand{display:flex;align-items:center;gap:12px}.mark{width:48px;height:48px;border-radius:15px;background:linear-gradient(145deg,#f0c77e,#b77a36);display:grid;place-items:center;color:#302013;font-size:25px;box-shadow:0 6px 20px #0005}h1{font-size:clamp(23px,4vw,32px);margin:0;letter-spacing:.2px}.sub{font-size:13px;color:var(--muted);margin-top:3px}.panel{background:linear-gradient(145deg,#233247,#1a2636);border:1px solid #ffffff12;border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 10px 28px #0003}.controls{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.controls button,.controls select{border:1px solid #ffffff18;border-radius:11px;padding:11px 14px;font-size:15px;font-weight:650;background:#34475e;color:#fff;cursor:pointer}.controls button.primary{background:linear-gradient(135deg,#dba85d,#b77a36);color:#24170d;border:0}.controls button:hover{filter:brightness(1.1)}.controls button.mode-active{outline:3px solid #ffe1a3;box-shadow:0 0 0 2px #6b4a24;background:linear-gradient(135deg,#e8b86d,#bd8748);color:#24170d}.controls select{background:#172334}.status{margin-top:12px;text-align:center;font-size:18px;font-weight:750;padding:11px;border-radius:12px;background:#101a28;color:#f5d59d;min-height:46px}.score{display:flex;justify-content:space-between;gap:10px;margin:0 0 12px}.score .side{flex:1;background:#172334;border:1px solid #ffffff12;border-radius:13px;padding:10px 13px;display:flex;justify-content:space-between;align-items:center}.side strong{font-size:15px}.side span{font-size:13px;color:var(--muted)}.red{color:#ff747b}.blue{color:#77b4ff}.board-shell{padding:10px;background:linear-gradient(145deg,#e9c48a,#bd8748);border-radius:22px;box-shadow:0 18px 42px #0007;border:1px solid #ffe4b466}canvas{display:block;width:min(94vw,720px);height:min(94vw,720px);max-width:720px;margin:auto;background:#c89552;border-radius:14px;touch-action:none}.help{color:#c4d0df;font-size:13px;line-height:1.55}.footer{color:#8092a8;font-size:11px;text-align:center;margin-top:14px}.lang{margin-left:auto}.lang button{min-width:62px}.lang button.active{background:#e6b76e;color:#2b1b0e}
 @media(max-width:520px){.wrap{padding:12px 9px 20px}.top{align-items:flex-start}.panel{padding:11px}.controls button,.controls select{flex:1;padding:10px 9px;font-size:14px}.score .side{padding:9px}.board-shell{padding:5px;border-radius:16px}.status{font-size:16px}}
 </style>
 </head>
@@ -19,8 +19,8 @@
 <div class="top"><div class="brand"><div class="mark">♟</div><div><h1 id="gameTitle">১৬ গুটি <span style="color:var(--gold)">• SOLOGUTI</span></h1><div class="sub" id="subtitle">Bangladeshi traditional strategy game</div></div></div><div class="controls lang"><button id="bnBtn" class="active">বাংলা</button><button id="enBtn">EN</button></div></div>
 <div class="panel">
  <div class="controls">
-  <button id="aiBtn" class="primary">🤖 Play vs AI</button>
-  <button id="pvpBtn">👥 2 Players</button>
+  <button id="aiBtn" class="primary mode-active" type="button" aria-pressed="true">🤖 Play vs AI</button>
+  <button id="pvpBtn" type="button" aria-pressed="false">👥 2 Players</button>
   <select id="difficulty" aria-label="AI difficulty"><option value="1">AI Easy</option><option value="2" selected>AI Medium</option><option value="3">AI Hard</option></select>
   <button id="newBtn">↻ New Game</button>
   <button id="soundBtn" aria-pressed="true">🔊 Sound ON</button>
@@ -102,6 +102,12 @@ const adj=Array.from({length:37},()=>[]);
 for(const e of edges){const [a,b]=e.split('-').map(Number);adj[a].push(b);adj[b].push(a)}
 
 let board=[];
+function updateModeUI(){
+ const ai=document.getElementById('aiBtn'),pvp=document.getElementById('pvpBtn');
+ ai.classList.toggle('mode-active',mode==='ai');pvp.classList.toggle('mode-active',mode==='pvp');
+ ai.setAttribute('aria-pressed',String(mode==='ai'));pvp.setAttribute('aria-pressed',String(mode==='pvp'));
+ statusEl.textContent=language==='bn'?(mode==='ai'?'🤖 কম্পিউটারের বিরুদ্ধে খেলছেন':'👥 দুইজন খেলছেন'):(mode==='ai'?'🤖 Playing against AI':'👥 Two-player mode');
+}
 function reset(){
  board=Array(37).fill(-1);
  // 16 red top: points 0-5 and 6-15.
@@ -109,7 +115,7 @@ function reset(){
  // 16 blue bottom: points 21-36 except the five center points 16-20.
  for(let i=21;i<=36;i++)board[i]=1;
  turn=0;selected=-1;gameOver=false;chain=false;thinking=false;
- render();draw();
+ updateModeUI();render();draw();
 }
 function captureTargets(i,p){
  const out=[];
@@ -300,8 +306,8 @@ function pointer(e){
  if(board[best]===turn){selected=best;render();draw()}
 }
 canvas.addEventListener('pointerdown',pointer);
-document.getElementById('aiBtn').onclick=()=>{mode='ai';reset()};
-document.getElementById('pvpBtn').onclick=()=>{mode='pvp';reset()};
+document.getElementById('aiBtn').addEventListener('click',()=>{mode='ai';reset()});
+document.getElementById('pvpBtn').addEventListener('click',()=>{mode='pvp';reset()});
 document.getElementById('newBtn').onclick=reset;
 document.getElementById('difficulty').onchange=e=>difficulty=+e.target.value;
 document.getElementById('soundBtn').onclick=()=>{
