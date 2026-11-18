@@ -110,6 +110,48 @@
   }
 }
 
+
+/* Compact play controls and maximise the board on phones */
+@media(max-width:520px){
+  body:has(#gameScreen:not([hidden])) .top{margin-bottom:3px;gap:3px}
+  body:has(#gameScreen:not([hidden])) .top .mark{width:28px;height:28px;font-size:15px;border-radius:8px}
+  body:has(#gameScreen:not([hidden])) .top h1{font-size:16px}
+  body:has(#gameScreen:not([hidden])) .top .sub{display:none}
+  body:has(#gameScreen:not([hidden])) .top .lang button{min-width:32px;padding:4px 5px!important;font-size:10px!important}
+  #gameScreen{min-height:calc(100dvh - 55px);height:calc(100dvh - 55px)}
+  #gameScreen>.panel:first-child{padding:3px;margin:0 0 3px;border-radius:10px}
+  #gameScreen .game-controls{gap:3px}
+  #gameScreen .game-controls button{
+    min-height:25px;
+    height:25px;
+    padding:2px 2px;
+    font-size:9px;
+    line-height:1;
+    border-radius:7px;
+  }
+  #gameScreen .status{margin-top:3px;min-height:22px;height:22px;padding:2px;font-size:11px;line-height:18px;border-radius:7px}
+  #gameScreen .score{margin:0 0 3px;gap:3px}
+  #gameScreen .score .side{min-height:27px;padding:3px 5px;border-radius:8px}
+  #gameScreen .side strong{font-size:11px}
+  #gameScreen .side span{font-size:9px}
+  #gameScreen .board-shell{
+    flex:1 1 auto;
+    min-height:0;
+    padding:3px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  #gameScreen canvas{
+    width:calc(100vw - 16px);
+    height:calc(100vw - 16px);
+    max-width:none;
+    max-height:none;
+  }
+  #gameScreen>.help{display:none}
+}
+
 </style>
 </head>
 <body>
