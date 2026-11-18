@@ -12,6 +12,104 @@
 *{box-sizing:border-box}[hidden]{display:none!important}.screen{width:100%}body{margin:0;background:radial-gradient(circle at top,#26364a,#101722 60%);color:var(--cream);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;min-height:100vh}
 .wrap{max-width:900px;margin:auto;padding:18px 14px 28px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.brand{display:flex;align-items:center;gap:12px}.mark{width:48px;height:48px;border-radius:15px;background:linear-gradient(145deg,#f0c77e,#b77a36);display:grid;place-items:center;color:#302013;font-size:25px;box-shadow:0 6px 20px #0005}h1{font-size:clamp(23px,4vw,32px);margin:0;letter-spacing:.2px}.sub{font-size:13px;color:var(--muted);margin-top:3px}.game-controls{justify-content:space-between}.game-controls button{flex:1}.panel{background:linear-gradient(145deg,#233247,#1a2636);border:1px solid #ffffff12;border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 10px 28px #0003}.controls{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.controls button,.controls select{border:1px solid #ffffff18;border-radius:11px;padding:11px 14px;font-size:15px;font-weight:650;background:#34475e;color:#fff;cursor:pointer}.controls button.primary{background:linear-gradient(135deg,#dba85d,#b77a36);color:#24170d;border:0}.controls button:hover{filter:brightness(1.1)}.controls button.mode-active{outline:3px solid #ffe1a3;box-shadow:0 0 0 2px #6b4a24;background:linear-gradient(135deg,#e8b86d,#bd8748)!important;color:#24170d!important;border-color:#ffe1a3!important}.controls button:not(.mode-active){background:#34475e!important;color:#fff!important;outline:none!important;box-shadow:none!important;border:1px solid #ffffff18!important}.controls select{background:#172334}.status{margin-top:12px;text-align:center;font-size:18px;font-weight:750;padding:11px;border-radius:12px;background:#101a28;color:#f5d59d;min-height:46px}.score{display:flex;justify-content:space-between;gap:10px;margin:0 0 12px}.score .side{flex:1;background:#172334;border:1px solid #ffffff12;border-radius:13px;padding:10px 13px;display:flex;justify-content:space-between;align-items:center}.side strong{font-size:15px}.side span{font-size:13px;color:var(--muted)}.red{color:#ff747b}.blue{color:#77b4ff}.board-shell{padding:10px;background:linear-gradient(145deg,#e9c48a,#bd8748);border-radius:22px;box-shadow:0 18px 42px #0007;border:1px solid #ffe4b466}canvas{display:block;width:min(94vw,720px);height:min(94vw,720px);max-width:720px;margin:auto;background:#c89552;border-radius:14px;touch-action:none}.help{color:#c4d0df;font-size:13px;line-height:1.55}.footer{color:#8092a8;font-size:11px;text-align:center;margin-top:14px}.lang{margin-left:auto}.lang button{min-width:62px}.lang button.active{background:#e6b76e;color:#2b1b0e}
 @media(max-width:520px){.wrap{padding:6px 5px 12px}.top{align-items:center;gap:5px;margin-bottom:5px}.brand{gap:7px}.mark{width:35px;height:35px;border-radius:10px;font-size:19px}h1{font-size:clamp(18px,4.8vw,23px)}.sub{font-size:10px;margin-top:1px}.lang{gap:4px}.lang button{min-width:40px;padding:6px 7px!important;font-size:11px!important}.panel{padding:6px;margin-bottom:6px}.panel>.controls:not(.lang){display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}.panel>.controls:not(.lang) button,.panel>.controls:not(.lang) select{min-width:0;width:100%;padding:6px 3px;font-size:11px;line-height:1.1;white-space:nowrap;flex:none;min-height:34px}.panel>.controls:not(.lang) #aiBtn,.panel>.controls:not(.lang) #pvpBtn{grid-column:span 3}.panel>.controls:not(.lang) #difficulty,.panel>.controls:not(.lang) #newBtn,.panel>.controls:not(.lang) #soundBtn{grid-column:span 2}.panel>.controls:not(.lang) #startBtn{grid-column:span 6}.game-controls button{grid-column:span 2!important}.status{margin-top:5px;padding:6px;font-size:13px;min-height:32px}.score{gap:5px;margin-bottom:6px}.score .side{padding:6px 7px}.side strong{font-size:12px}.side span{font-size:10px}.board-shell{padding:4px;border-radius:13px;width:100%}canvas{width:calc(100vw - 22px);height:calc(100vw - 22px);max-width:none;border-radius:10px}.help{font-size:11px;padding:8px}.footer{margin-top:6px}}
+
+/* Screen-filling mobile layout refinement */
+@media(max-width:520px){
+  #setupScreen{
+    min-height:calc(100dvh - 92px);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:16px;
+  }
+  #setupScreen>.panel:first-child{
+    padding:16px;
+    border-radius:22px;
+    margin:0;
+  }
+  #setupScreen>.panel:first-child .controls{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  #setupScreen #aiBtn,#setupScreen #pvpBtn{
+    grid-column:span 2;
+    width:100%;
+    min-height:76px;
+    padding:16px 10px;
+    font-size:18px;
+    border-radius:16px;
+    white-space:normal;
+  }
+  #setupScreen #difficulty{
+    grid-column:span 2;
+    width:100%;
+    min-height:56px;
+    padding:12px;
+    font-size:16px;
+    border-radius:14px;
+  }
+  #setupScreen #startBtn{
+    grid-column:span 2;
+    width:100%;
+    min-height:78px;
+    padding:16px;
+    font-size:20px;
+    border-radius:17px;
+    box-shadow:0 8px 20px #0004;
+  }
+  #setupScreen>.help{
+    padding:16px;
+    font-size:14px;
+    line-height:1.65;
+    border-radius:18px;
+    margin:0;
+  }
+  #setupScreen>.footer{margin-top:auto;padding:8px 0 4px}
+  #gameScreen{
+    min-height:calc(100dvh - 92px);
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  #gameScreen>.panel:first-child{padding:6px;margin:0 0 6px}
+  #gameScreen .game-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+  #gameScreen .game-controls button{
+    min-width:0;
+    min-height:38px;
+    padding:5px 3px;
+    font-size:11px;
+    white-space:nowrap;
+  }
+  #gameScreen .status{margin-top:5px;min-height:30px;padding:5px;font-size:13px}
+  #gameScreen .score{flex:0 0 auto;margin:0 0 6px;gap:5px}
+  #gameScreen .score .side{padding:5px 7px;min-height:36px}
+  #gameScreen .board-shell{
+    flex:1 1 auto;
+    min-height:0;
+    width:100%;
+    padding:4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+  }
+  #gameScreen canvas{
+    width:min(calc(100vw - 22px),calc(100dvh - 330px));
+    height:min(calc(100vw - 22px),calc(100dvh - 330px));
+    max-width:none;
+    max-height:none;
+    flex:0 0 auto;
+  }
+  #gameScreen>.help{
+    flex:0 0 auto;
+    margin:6px 0 0!important;
+    padding:6px 8px;
+    font-size:10px;
+    line-height:1.35;
+  }
+}
+
 </style>
 </head>
 <body>
