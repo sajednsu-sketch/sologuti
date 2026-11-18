@@ -105,6 +105,7 @@ let board=[];
 function updateModeUI(){
  const ai=document.getElementById('aiBtn'),pvp=document.getElementById('pvpBtn');
  ai.classList.toggle('mode-active',mode==='ai');pvp.classList.toggle('mode-active',mode==='pvp');
+ ai.classList.toggle('primary',mode==='ai');pvp.classList.toggle('primary',mode==='pvp');
  ai.setAttribute('aria-pressed',String(mode==='ai'));pvp.setAttribute('aria-pressed',String(mode==='pvp'));
  statusEl.textContent=language==='bn'?(mode==='ai'?'🤖 কম্পিউটারের বিরুদ্ধে খেলছেন':'👥 দুইজন খেলছেন'):(mode==='ai'?'🤖 Playing against AI':'👥 Two-player mode');
 }
