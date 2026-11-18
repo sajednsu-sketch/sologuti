@@ -1,0 +1,19 @@
+{
+  "name": "Sologuti – ১৬ গুটি",
+  "short_name": "Sologuti",
+  "description": "A traditional Bangladeshi strategy board game",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "lang": "bn",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
