@@ -120,9 +120,9 @@
   body:has(#gameScreen:not([hidden])) .top .lang button{min-width:32px;padding:4px 5px!important;font-size:10px!important}
   #gameScreen{min-height:calc(100dvh - 55px);height:calc(100dvh - 55px)}
   #gameScreen>.panel:first-child{padding:3px;margin:0 0 3px;border-radius:10px}
-  #gameScreen .game-controls{gap:3px}
+  #gameScreen .game-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;width:100%}
   #gameScreen .game-controls button{
-    min-height:25px;
+    grid-column:auto!important;min-width:0;width:100%;min-height:25px;
     height:25px;
     padding:2px 2px;
     font-size:9px;
@@ -219,8 +219,8 @@ const pts=[
  [105,395],[230,395],[360,395],[490,395],[615,395],
  [105,475],[230,475],[360,475],[490,475],[615,475],
  [105,555],[230,555],[360,555],[490,555],[615,555],
- [300,625],[360,625],[420,625],
- [260,690],[360,690],[460,690]
+ [300,580],[360,580],[420,580],
+ [260,665],[360,665],[460,665]
 ];
 
 const edges=new Set();
