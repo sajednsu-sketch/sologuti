@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#111827">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
 <title>১৬ গুটি — Sologuti</title>
 <style>
 :root{--bg:#111827;--panel:#1d2939;--panel2:#26364a;--gold:#e8b86d;--cream:#fff5e5;--muted:#aebdce;--red:#e34b55;--blue:#4c91ed}
@@ -318,6 +321,9 @@ function effectsLoop(){
 const originalDraw=draw;
 const drawWithEffects=()=>{originalDraw();if(lastMove||flashCapture>=0)requestAnimationFrame(effectsLoop)};
 reset();setLanguage('bn');
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch(console.error));
+}
 </script>
 </body>
 </html>
