@@ -189,7 +189,7 @@ const statusEl=document.getElementById('status');
 let language='bn';
 function updateCounts(){const r=board.filter(v=>v===0).length,b=board.filter(v=>v===1).length;document.getElementById('redCount').textContent=(language==='bn'?r+' গুটি':r+' pieces');document.getElementById('blueCount').textContent=(language==='bn'?b+' গুটি':b+' pieces')}
 function setLanguage(lang){language=lang;document.getElementById('bnBtn').classList.toggle('active',lang==='bn');document.getElementById('enBtn').classList.toggle('active',lang==='en');document.getElementById('subtitle').textContent=lang==='bn'?'বাংলার ঐতিহ্যবাহী কৌশলভিত্তিক খেলা':'Bangladeshi traditional strategy game';document.getElementById('redName').textContent=lang==='bn'?'🔴 লাল':'🔴 Red';document.getElementById('blueName').textContent=lang==='bn'?'🔵 নীল':'🔵 Blue';document.getElementById('howTitle').textContent=lang==='bn'?'খেলার নিয়ম':'How to play';document.getElementById('helpText').textContent=lang==='bn'?'নিজের গুটিতে ট্যাপ করুন, তারপর সবুজ চিহ্নিত ঘরে ট্যাপ করুন। প্রতিপক্ষের গুটি লাফিয়ে পার হলে সেটি কাটা যায়। পরপর কাটার সুযোগ থাকলে একই গুটি দিয়ে চাল চালিয়ে যান।':'Select your piece, then tap a highlighted destination. Jump over an adjacent opponent piece to capture it. If another capture is available, continue with the same piece.';render();updateCounts()}
-let mode='ai',difficulty=2,turn=0,selected=-1,gameOver=false,chain=false,thinking=false;
+let mode='ai',difficulty=2,turn=0,selected=-1,gameOver=false,winner=-1,chain=false,thinking=false;
 let soundOn=true,audioCtx=null,lastMove=null,flashCapture=-1,flashUntil=0;
 function playTone(kind){
  if(!soundOn)return;
@@ -266,7 +266,7 @@ function reset(){
  for(let i=0;i<=15;i++)board[i]=0;
  // 16 blue bottom: points 21-36 except the five center points 16-20.
  for(let i=21;i<=36;i++)board[i]=1;
- turn=0;selected=-1;gameOver=false;chain=false;thinking=false;
+ turn=0;selected=-1;gameOver=false;winner=-1;chain=false;thinking=false;
  updateModeUI();render();draw();
 }
 function captureTargets(i,p){
@@ -304,9 +304,12 @@ function makeMove(i,j){
  board[j]=board[i];board[i]=-1;
  lastMove={from:i,to:j,at:Date.now()};requestAnimationFrame(effectsLoop);
  if(o.cap>=0){board[o.cap]=-1;chain=true;flashCapture=o.cap;flashUntil=Date.now()+420;playTone('capture')}else{chain=false;playTone('move')}
- if(!board.includes(1-turn)){gameOver=true;selected=-1;playTone('win');render();draw();return true}
+ if(!board.includes(1-turn)){gameOver=true;winner=turn;selected=-1;playTone('win');render();draw();return true}
  if(chain&&captureTargets(j,turn).length){selected=j;render();draw();if(mode==='ai'&&turn===1&&!gameOver){thinking=true;render();setTimeout(aiTurn,300)}return true}
- chain=false;selected=-1;turn=1-turn;render();draw();
+ chain=false;selected=-1;turn=1-turn;
+ const hasMove=board.some((piece,i)=>piece===turn&&legalDest(i,turn).length>0);
+ if(!hasMove){gameOver=true;winner=1-turn;playTone('win')}
+ render();draw();
  if(mode==='ai'&&turn===1&&!gameOver){thinking=true;render();setTimeout(aiTurn,300)}
  return true;
 }
@@ -390,7 +393,7 @@ function minimax(state,depth,alpha,beta,player){
 function aiTurn(){
  if(gameOver||turn!==1){thinking=false;render();return}
  const choices=completeTurnStates(board,1,chain?selected:-1);
- if(!choices.length){gameOver=true;thinking=false;render();draw();return}
+ if(!choices.length){gameOver=true;winner=0;thinking=false;playTone('win');render();draw();return}
  let chosen;
  if(difficulty===1){
    const firsts=choices.map(x=>x.firstAction);
@@ -408,10 +411,10 @@ function aiTurn(){
    if(!chosen)chosen=ordered[0].firstAction;
  }
  thinking=false;
- if(chosen){makeMove(chosen.i,chosen.j)}else{gameOver=true;render();draw()}
+ if(chosen){makeMove(chosen.i,chosen.j)}else{gameOver=true;winner=0;playTone('win');render();draw()}
 }
 function render(){
- if(gameOver){statusEl.textContent=language==='bn'?(turn===0?'🔴 লাল জিতেছে!':'🔵 নীল জিতেছে!'):(turn===0?'🔴 Red wins!':'🔵 Blue wins!');updateCounts();return}
+ if(gameOver){statusEl.textContent=language==='bn'?(winner===0?'🔴 লাল জিতেছে!':'🔵 নীল জিতেছে!'):(winner===0?'🔴 Red wins!':'🔵 Blue wins!');updateCounts();return}
  if(thinking){statusEl.textContent=language==='bn'?'🤖 কম্পিউটার চাল দিচ্ছে…':'🤖 AI is thinking…';updateCounts();return}
  const who=turn===0?'🔴 Red':'🔵 Blue';
  statusEl.textContent=language==='bn'?((turn===0?'🔴 লালের চাল':'🔵 নীলের চাল')+(anyCapture(turn)?' — কাটতে হবে':'')):(who+"'s turn"+(anyCapture(turn)?' — capture required':''));updateCounts();
@@ -455,6 +458,7 @@ function pointer(e){
  for(let i=0;i<37;i++){const q=Math.hypot(pts[i][0]-x,pts[i][1]-y);if(q<d){d=q;best=i}}
  if(best<0)return;
  if(selected>=0&&makeMove(selected,best))return;
+ if(chain&&selected>=0&&best!==selected)return;
  if(board[best]===turn){selected=best;render();draw()}
 }
 canvas.addEventListener('pointerdown',pointer);
