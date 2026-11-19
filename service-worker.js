@@ -1,5 +1,5 @@
-const CACHE_NAME = "sologuti-v14";
-const APP_FILES = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon.svg"];
+const CACHE_NAME = "sologuti-v15";
+const APP_FILES = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon.svg", "./privacy.html"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)));
   self.skipWaiting();
