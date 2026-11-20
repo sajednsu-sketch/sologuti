@@ -2,6 +2,7 @@ name: Build Sologuti Android
 
 on:
   push:
+    branches: [main]
     paths:
       - "twa-manifest.json"
       - ".github/workflows/android-build.yml"
@@ -13,57 +14,60 @@ permissions:
 
 jobs:
   build:
+    name: Build Android App Bundle
     runs-on: ubuntu-latest
-    env:
-      ANDROID_HOME: /usr/local/lib/android/sdk
-      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
     steps:
       - name: Check out Sologuti
         uses: actions/checkout@v4
 
       - name: Set up Java 17
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
 
-      - name: Configure Android SDK command-line tools
-        run: |
-          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
-          echo "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"
-
-      - name: Accept Android SDK licenses
-        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses
-
-      - name: Install Android SDK packages
-        run: "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          cmdline-tools-version: 13114758
+          packages: |
+            platform-tools
+            platforms;android-36
+            build-tools;36.0.0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: npm
 
       - name: Install Bubblewrap
         run: npm install --global @bubblewrap/cli
 
-      - name: Configure Bubblewrap
-        run: bubblewrap updateConfig --jdkPath="$JAVA_HOME" --androidSdkPath="$ANDROID_HOME"
+      - name: Configure Bubblewrap SDK paths
+        shell: bash
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "JAVA_HOME=$JAVA_HOME"
+          test -d "$ANDROID_HOME"
+          bubblewrap updateConfig --jdkPath="$JAVA_HOME" --androidSdkPath="$ANDROID_HOME"
 
-      - name: Generate Android project from committed TWA manifest
+      - name: Generate Android project
         run: bubblewrap update --skipVersionUpgrade
 
       - name: Build unsigned Android package
-        run: bubblewrap build --skipSigning
+        run: bubblewrap build --skipSigning --skipPwaValidation
 
       - name: Collect Android build outputs
         shell: bash
         run: |
           mkdir -p build-artifacts
-          find . -type f \\( -name "*.aab" -o -name "*.apk" \\) \\
-            -not -path "./node_modules/*" \\
-            -not -path "./.git/*" \\
-            -exec cp {} build-artifacts/ \\;
+          find . -type f \( -name "*.aab" -o -name "*.apk" \) \
+            -not -path "./node_modules/*" \
+            -not -path "./.git/*" \
+            -exec cp {} build-artifacts/ \;
           test -n "$(find build-artifacts -type f -print -quit)"
+          ls -lh build-artifacts
 
       - name: Upload Android build artifacts
         uses: actions/upload-artifact@v4
