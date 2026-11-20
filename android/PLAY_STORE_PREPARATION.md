@@ -58,3 +58,8 @@ Review the generated configuration before building. Confirm the application ID i
 - Privacy policy: https://sajednsu-sketch.github.io/sologuti/privacy.html
 
 Do not claim multiplayer over the internet: the current game supports local two-player mode and play against AI.
+
+
+## Automated build workflow
+
+The GitHub Actions workflow generates the Trusted Web Activity project directly from `twa-manifest.json` using Bubblewrap's non-interactive `update` command, then builds an unsigned test package. A signed Play Store release still requires the preserved private signing key.
