@@ -14,23 +14,24 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
     steps:
       - name: Check out Sologuti
         uses: actions/checkout@v4
 
       - name: Set up Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
 
-      # GitHub's Ubuntu runner already includes the Android SDK. Avoid the
-      # setup-android action's legacy "tools" package, which is retired.
       - name: Accept Android SDK licenses
-        run: yes | sdkmanager --licenses
+        run: yes | "$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager" --licenses
 
       - name: Install Android SDK packages
-        run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+        run: "$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager" "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -46,9 +47,6 @@ jobs:
       - name: Generate Android project
         run: bubblewrap update --skipVersionUpgrade
 
-      # This first cloud build verifies the Android project and produces an
-      # unsigned bundle. A persistent upload keystore must be configured
-      # before producing a Play Store-ready signed AAB.
       - name: Build unsigned Android package
         run: bubblewrap build --skipSigning
 
