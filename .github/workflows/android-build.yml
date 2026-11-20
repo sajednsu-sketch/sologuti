@@ -56,11 +56,22 @@ jobs:
           printf '{"jdkPath":"%s","androidSdkPath":"%s"}\n' "$JAVA_HOME" "$ANDROID_HOME" > "$HOME/.bubblewrap/config.json"
           cat "$HOME/.bubblewrap/config.json"
 
-      - name: Generate Android project
-        run: bubblewrap update --skipVersionUpgrade
+      - name: Initialize Bubblewrap project
+        shell: bash
+        run: |
+          mkdir -p android-project
+          # Bubblewrap init is interactive. Accept manifest-derived defaults,
+          # then decline creation of a new signing key (the CI build is unsigned).
+          { for i in $(seq 1 17); do printf '\\n'; done; printf 'n\\n'; } | bubblewrap init --manifest="https://sajednsu-sketch.github.io/sologuti/manifest.webmanifest" --directory="android-project"
+
+      - name: Apply approved Sologuti Android configuration
+        shell: bash
+        run: |
+          cp twa-manifest.json android-project/twa-manifest.json
+          bubblewrap update --manifest="android-project" --skipVersionUpgrade
 
       - name: Build unsigned Android package
-        run: bubblewrap build --skipSigning --skipPwaValidation
+        run: bubblewrap build --manifest="android-project" --skipSigning --skipPwaValidation
 
       - name: Collect Android build outputs
         shell: bash
