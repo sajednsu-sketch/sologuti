@@ -63,3 +63,6 @@ Do not claim multiplayer over the internet: the current game supports local two-
 ## Automated build workflow
 
 The GitHub Actions workflow generates the Trusted Web Activity project directly from `twa-manifest.json` using Bubblewrap's non-interactive `update` command, then builds an unsigned test package. A signed Play Store release still requires the preserved private signing key.
+
+
+The CI build command runs from inside the generated `android-project` directory so Bubblewrap can locate its `twa-manifest.json` and `manifest-checksum.txt` consistently.
