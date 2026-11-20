@@ -59,10 +59,20 @@ jobs:
       - name: Initialize Bubblewrap project
         shell: bash
         run: |
+          sudo apt-get update
+          sudo apt-get install -y expect
           mkdir -p android-project
-          # Bubblewrap init is interactive. Accept manifest-derived defaults,
-          # then decline creation of a new signing key (the CI build is unsigned).
-          { for i in $(seq 1 17); do printf '\n'; done; printf 'n\n'; } | bubblewrap init --manifest="https://sajednsu-sketch.github.io/sologuti/manifest.webmanifest" --directory="android-project"
+          # Placeholder files prevent Bubblewrap from launching key-generation prompts.
+          touch android-project/android.keystore android-project/android-keystore
+          expect <<'EOF'
+          set timeout 180
+          spawn bubblewrap init --manifest="https://sajednsu-sketch.github.io/sologuti/manifest.webmanifest" --directory="android-project"
+          expect {
+            -re "\\? .*" { send "\r"; exp_continue }
+            eof { wait }
+            timeout { exit 1 }
+          }
+          EOF
 
       - name: Apply approved Sologuti Android configuration
         shell: bash
