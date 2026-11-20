@@ -1,0 +1,38 @@
+{
+  "packageId": "com.sajednsu.sologuti",
+  "host": "sajednsu-sketch.github.io",
+  "name": "Sologuti – ১৬ গুটি",
+  "launcherName": "Sologuti",
+  "display": "standalone",
+  "themeColor": "#111827",
+  "themeColorDark": "#111827",
+  "navigationColor": "#111827",
+  "navigationColorDark": "#111827",
+  "navigationDividerColor": "#00000000",
+  "navigationDividerColorDark": "#00000000",
+  "backgroundColor": "#111827",
+  "enableNotifications": false,
+  "startUrl": "/sologuti/",
+  "iconUrl": "https://sajednsu-sketch.github.io/sologuti/icons/icon.svg",
+  "maskableIconUrl": "https://sajednsu-sketch.github.io/sologuti/icons/icon.svg",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "android"
+  },
+  "appVersion": "1",
+  "appVersionCode": 1,
+  "webManifestUrl": "https://sajednsu-sketch.github.io/sologuti/manifest.webmanifest",
+  "generatorApp": "bubblewrap-cli",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": false,
+  "orientation": "portrait",
+  "minSdkVersion": 23,
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": []
+}
