@@ -54,43 +54,22 @@ jobs:
         run: |
           mkdir -p "$HOME/.bubblewrap"
           printf '{"jdkPath":"%s","androidSdkPath":"%s"}\n' "$JAVA_HOME" "$ANDROID_HOME" > "$HOME/.bubblewrap/config.json"
-          cat "$HOME/.bubblewrap/config.json"
 
-      - name: Initialize Bubblewrap project
+      - name: Generate Android project without interactive setup
         shell: bash
         run: |
-          sudo apt-get update
-          sudo apt-get install -y expect
           mkdir -p android-project
-          # Placeholder files prevent Bubblewrap from launching key-generation prompts.
-          touch android-project/android.keystore android-project/android-keystore
-          expect <<'EOF'
-          set timeout 180
-          spawn bubblewrap init --manifest="https://sajednsu-sketch.github.io/sologuti/manifest.webmanifest" --directory="android-project"
-          expect {
-            -re "\\? .*" { send "\r"; exp_continue }
-            eof { wait }
-            timeout { exit 1 }
-          }
-          EOF
-
-      - name: Apply approved Sologuti Android configuration
-        shell: bash
-        run: |
           cp twa-manifest.json android-project/twa-manifest.json
-          bubblewrap update --manifest="android-project" --skipVersionUpgrade
+          bubblewrap update --directory="android-project" --manifest="android-project/twa-manifest.json" --skipVersionUpgrade
 
       - name: Build unsigned Android package
-        run: bubblewrap build --manifest="android-project" --skipSigning --skipPwaValidation
+        run: bubblewrap build --directory="android-project" --manifest="android-project/twa-manifest.json" --skipSigning --skipPwaValidation
 
       - name: Collect Android build outputs
         shell: bash
         run: |
           mkdir -p build-artifacts
-          find . -type f \( -name "*.aab" -o -name "*.apk" \) \
-            -not -path "./node_modules/*" \
-            -not -path "./.git/*" \
-            -exec cp {} build-artifacts/ \;
+          find android-project -type f \( -name "*.aab" -o -name "*.apk" \) -exec cp {} build-artifacts/ \;
           test -n "$(find build-artifacts -type f -print -quit)"
           ls -lh build-artifacts
 
