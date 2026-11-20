@@ -62,7 +62,7 @@ jobs:
           mkdir -p android-project
           # Bubblewrap init is interactive. Accept manifest-derived defaults,
           # then decline creation of a new signing key (the CI build is unsigned).
-          { for i in $(seq 1 17); do printf '\\n'; done; printf 'n\\n'; } | bubblewrap init --manifest="https://sajednsu-sketch.github.io/sologuti/manifest.webmanifest" --directory="android-project"
+          { for i in $(seq 1 17); do printf '\n'; done; printf 'n\\n'; } | bubblewrap init --manifest="https://sajednsu-sketch.github.io/sologuti/manifest.webmanifest" --directory="android-project"
 
       - name: Apply approved Sologuti Android configuration
         shell: bash
