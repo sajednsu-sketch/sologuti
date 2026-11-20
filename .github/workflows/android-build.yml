@@ -63,7 +63,10 @@ jobs:
           bubblewrap update --directory="android-project" --manifest="android-project/twa-manifest.json" --skipVersionUpgrade
 
       - name: Build unsigned Android package
-        run: bubblewrap build --directory="android-project" --manifest="android-project/twa-manifest.json" --skipSigning --skipPwaValidation
+        shell: bash
+        run: |
+          cd android-project
+          bubblewrap build --manifest="twa-manifest.json" --skipSigning --skipPwaValidation
 
       - name: Collect Android build outputs
         shell: bash
