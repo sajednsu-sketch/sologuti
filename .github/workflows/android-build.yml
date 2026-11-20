@@ -27,11 +27,14 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Accept Android SDK licenses
-        run: yes | "$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager" --licenses
+        run: yes | sdkmanager --licenses
 
       - name: Install Android SDK packages
-        run: "$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager" "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+        run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -44,7 +47,7 @@ jobs:
       - name: Configure Bubblewrap
         run: bubblewrap updateConfig --jdkPath="$JAVA_HOME" --androidSdkPath="$ANDROID_HOME"
 
-      - name: Generate Android project
+      - name: Generate Android project from committed TWA manifest
         run: bubblewrap update --skipVersionUpgrade
 
       - name: Build unsigned Android package
@@ -54,10 +57,10 @@ jobs:
         shell: bash
         run: |
           mkdir -p build-artifacts
-          find . -type f \( -name "*.aab" -o -name "*.apk" \) \
-            -not -path "./node_modules/*" \
-            -not -path "./.git/*" \
-            -exec cp {} build-artifacts/ \;
+          find . -type f \\( -name "*.aab" -o -name "*.apk" \\) \\
+            -not -path "./node_modules/*" \\
+            -not -path "./.git/*" \\
+            -exec cp {} build-artifacts/ \\;
           test -n "$(find build-artifacts -type f -print -quit)"
 
       - name: Upload Android build artifacts
