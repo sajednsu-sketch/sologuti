@@ -52,7 +52,9 @@ jobs:
       - name: Configure Bubblewrap SDK paths
         shell: bash
         run: |
-          bubblewrap updateConfig --jdkPath="$JAVA_HOME" --androidSdkPath="$ANDROID_HOME"
+          mkdir -p "$HOME/.bubblewrap"
+          printf '{"jdkPath":"%s","androidSdkPath":"%s"}\n' "$JAVA_HOME" "$ANDROID_HOME" > "$HOME/.bubblewrap/config.json"
+          cat "$HOME/.bubblewrap/config.json"
 
       - name: Generate Android project
         run: bubblewrap update --skipVersionUpgrade
