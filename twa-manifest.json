@@ -32,7 +32,9 @@
   "enableSiteSettingsShortcut": false,
   "orientation": "portrait",
   "minSdkVersion": 24,
-  "fingerprints": [],
+  "fingerprints": [
+    "19:3D:63:E2:B8:BF:4E:0D:3C:C5:08:FC:93:5F:F6:F2:7F:33:06:84:E4:A4:C4:FE:24:56:D8:1E:F5:54:C2:2F"
+  ],
   "additionalTrustedOrigins": [],
   "retainedBundles": []
 }
