@@ -20,8 +20,8 @@
     "path": "./android.keystore",
     "alias": "android"
   },
-  "appVersion": "1",
-  "appVersionCode": 1,
+  "appVersion": "2",
+  "appVersionCode": 2,
   "webManifestUrl": "https://sajednsu-sketch.github.io/sologuti/manifest.webmanifest",
   "generatorApp": "bubblewrap-cli",
   "fallbackType": "customtabs",
